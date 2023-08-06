@@ -2,6 +2,11 @@ package org.example;
 
 import java.util.ArrayList;
 
+/*
+ * Time Complexity O(n)
+ * Space Complexity O(n) 
+ *
+ * */
 public class InsertInterval {
 
     public static int[][] insert(int[][] intervals, int[] newInterval) {
