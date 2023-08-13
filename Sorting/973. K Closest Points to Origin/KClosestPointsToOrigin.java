@@ -32,40 +32,46 @@ public class KClosestPointsToOrigin {
 
     // Quick Select
     public int[][] kClosest3(int[][] points, int k) {
-        int len = points.length;
-        int l = 0;
-        int r = len - 1;
-        while (l <= r) {
-            int mid = helper(points, l, r);
-            if (mid == k) break;
-            if (mid < k) {
-                l = mid + 1;
-            } else {
-                r = mid - 1;
-            }
-        }
+        quickSelect(points, 0, points.length - 1, k);
         return Arrays.copyOfRange(points, 0, k);
-
     }
 
-    private int helper(int[][] points, int l, int r) {
-        int[] pivot = points[l];
-        while (l < r) {
-            while (l < r && compare(points[r], pivot) >= 0) {
-                r--;
-                points[l] = points[r];
+    private void quickSelect(int[][] points, int start, int end, int k) {
+        while (start <= end) {
+            if (start == end) {
+                return;
             }
-            while (l < r && compare(points[l], pivot) <= 0) {
-                l++;
-                points[r] = points[l];
+            int pIndex = partition(points , start, end);
+            if (pIndex < k) {
+                start = pIndex + 1;
+            } else if (pIndex > k) {
+                end = pIndex - 1;
+            } else {
+                return;
             }
         }
-        points[l] = pivot;
-        return l;
     }
 
-    private int compare(int[] p1, int[] p2) {
-        return p1[0] * p1[0] + p1[1] * p1[1] - p2[0] * p2[0] - p2[1] * p2[1];
+    private int partition(int[][] points, int start, int end) {
+        int[] pivot = points[end];
+        int pIndex = start;
+        for (int i = start; i < end; i++) {
+            if (dis(points[i]) <= dis(pivot)) {
+                swap(points, i, pIndex);
+                pIndex++;
+            }
+        }
+        swap(points, pIndex, end);
+        return pIndex;
+    }
+    private void swap(int[][] a, int x, int y) {
+        int[] temp = a[x];
+        a[x] = a[y];
+        a[y] = temp;
+    }
+
+    private int dis(int[] x) {
+        return x[0]*x[0] + x[1]*x[1];
     }
 
 }
