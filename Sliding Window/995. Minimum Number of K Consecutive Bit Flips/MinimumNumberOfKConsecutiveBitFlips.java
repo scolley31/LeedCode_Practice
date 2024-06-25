@@ -25,7 +25,7 @@ public class MinimumNumberOfKConsecutiveBitFlips {
         Deque<Integer> queue = new ArrayDeque<>();
         int flipCount = 0;
         for (int i = 0; i < nums.length; i++) {
-            while (!queue.isEmpty() && (i - queue.peekFirst() + 1) > k) {
+            if (!queue.isEmpty() && (i - queue.peekFirst() + 1) > k) {
                 queue.pollFirst();
             }
 
